@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SWATHI TO DO LIST</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(90deg, #ec2cd5, #6a62d2, #3de9e9);
+      font-family: Poppins, sans-serif;
+    }
+
+    .container {
+      margin: 0 auto;
+      text-align: center;
+      width: 70%;
+      max-width: 600px;
+      padding: 60px 0;
+      color: white;
+    }
+
+    #line {
+      width: 30px;
+      height: 2px;
+      background-color: white;
+      margin: 0 auto;
+      border-radius: 10px;
+      margin-bottom: 20px;
+
+    }
+
+    .flex-button {
+      display: inline;
+      width: 100%;
+    }
+
+    input {
+      border: none;
+    }
+
+    input[type='text'] {
+      width: 70%;
+      padding: 5px 10px;
+      outline: none;
+      font-size: 1.2rem;
+      margin-right: -4px;
+      color: rgb(0, 0, 0);
+      background-color: #ffffff;
+      cursor: pointer;
+    }
+
+    input[type='text']:disabled {
+      cursor: default;
+      color: rgb(227, 213, 213);
+      background-color: rgb(147, 135, 135);
+    }
+
+    input[type='button'] {
+      padding: 5px;
+      font-size: 1.04rem;
+      color: white;
+      margin: 0 -3px;
+    }
+
+    #add-btn {
+      margin-right: -4px;
+      background-color: #e9adad;
+    }
+
+    #del-btn {
+      background-color: #540a0a;
+    }
+
+    input[type='button']:active {
+      transform: scale(.94);
+    }
+
+
+    .new-tasks {
+      margin: 25px auto;
+    }
+
+    .update-task {
+      margin-left: 10px;
+      background-color: #158c47;
+    }
+
+    .rename-task {
+      background-color: #e9adad;
+    }
+
+
+    .del-task {
+      background-color: #540a0a;
+    }
+
+    .task {
+      width: 92%;
+      margin: 10px auto;
+      display: flex;
+      justify-content: center;
+
+    }
+
+
+    @media screen and (max-width:450px) {
+      .task {
+        display: inline;
+      }
+
+      .flex-button {
+        display: block;
+
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>SWATHI TO-DO LIST</h1>
+    <div id="line"></div>
+    <div class="task-input">
+      <input type="text" id="add-task" name="todo" placeholder="Add Task..." value="">
+      <div class="flex-button">
+        <input type="button" value="➕" name='add' id="add-btn" title="Add Task">
+        <input type="button" value="❌" name='delete' id="del-btn" title="Remove All Task">
+      </div>
+    </div>
+    <div class="new-tasks">
+      <!--
+      <div class="task">
+        <input type="checkbox" id="complete-task">
+        <input type="text" id="added-task" disabled value='sd'>
+        <input type="button" value="✏️" id="rename-task">
+        <input type="button" value="❌" id="del-task">
+      </div>
+      -->
+    </div>
+  </div>
+
+  <script>
+    const addInput = document.querySelector('#add-task')
+
+    const addBtn = document.querySelector('#add-btn')
+    const delTaskBtn = document.querySelector('#del-btn')
+
+    const renameBtn = document.querySelector('.rename-task')
+    const updateBtn = document.querySelector('.update-task')
+    const delBtn = document.querySelector('.del-task')
+
+    const newTasks = document.querySelector('.new-tasks')
+
+    delTaskBtn.addEventListener('click', () => {
+      addInput.value = ''
+    })
+
+
+    addBtn.addEventListener('click', (e) => {
+      let todo = addInput.value
+      todo = todo.trim()
+      if (todo == '') {
+        alert('No task is added ')
+      } else {
+        console.log(todo)
+        addTodo(todo)
+        addInput.value = ''
+        updateTodo()
+      }
+    })
+
+
+
+    function addTodo(todo) {
+      let todoTask = ` 
+              <div class="task">
+        <input type="text" id="added-task" name='todo' disabled value="${todo}">
+                  <div>
+                      <input type="button" value="✔️" name='update' title='update task' class="update-task">
+                      <input type="button" value="✏️" name='rename' title='rename task' class="rename-task">
+                      <input type="button" value="❌" name='delete' title='delete task' class="del-task">
+                  </div>
+              </div>
+              `
+      newTasks.innerHTML += todoTask
+
+    }
+
+
+    function updateTodo() {
+
+
+      let task = document.querySelectorAll('.task')
+
+      task.forEach((t) => {
+        // console.log(t.children)
+        t.addEventListener('click', e => {
+
+          if (e.target.classList.contains('rename-task')) {
+
+            console.log('rename')
+            if (t.children[0].disabled) {
+              t.children[0].disabled = false
+            }
+          } else if (e.target.classList.contains('del-task')) {
+            t.remove()
+          }
+
+          else if (e.target.classList.contains('update-task')) {
+            console.log(t.children[0].disabled)
+            if (t.children[0].disabled == false) {
+              t.children[0].disabled = true
+            }
+          }
+        })
+
+      })
+
+    }
+  </script>
+
+</body>
+
+</html>
+</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
